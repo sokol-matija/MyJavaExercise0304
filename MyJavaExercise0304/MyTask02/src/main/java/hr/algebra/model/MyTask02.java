@@ -4,11 +4,20 @@
  */
 package hr.algebra.model;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author msokol
  */
 public class MyTask02 extends javax.swing.JFrame {
+
+    private List<Student> students;
+    private final DefaultListModel<Student> studentsModel = new DefaultListModel<>();
 
     /**
      * Creates new form MyTask02
@@ -26,21 +35,167 @@ public class MyTask02 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lbFirstName = new javax.swing.JLabel();
+        tfFirstName = new javax.swing.JTextField();
+        tfLastName = new javax.swing.JLabel();
+        ftLastName = new javax.swing.JTextField();
+        btnFirstNameDesc = new javax.swing.JButton();
+        btnFirstNameAsc = new javax.swing.JButton();
+        btnLastNameDesc = new javax.swing.JButton();
+        btnLastNameAsc = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lsStudents = new javax.swing.JList<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Student sorter & filter");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        lbFirstName.setText("First Name ");
+
+        tfFirstName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfKeyReleased(evt);
+            }
+        });
+
+        tfLastName.setText("Last Name");
+
+        ftLastName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ftKeyReleased(evt);
+            }
+        });
+
+        btnFirstNameDesc.setText("Firsta name desc");
+        btnFirstNameDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstNameDescActionPerformed(evt);
+            }
+        });
+
+        btnFirstNameAsc.setText("First name asc");
+        btnFirstNameAsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstNameAscActionPerformed(evt);
+            }
+        });
+
+        btnLastNameDesc.setText("Last name desc");
+        btnLastNameDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastNameDescActionPerformed(evt);
+            }
+        });
+
+        btnLastNameAsc.setText("Last name asc");
+        btnLastNameAsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastNameAscActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(lsStudents);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tfLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ftLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnLastNameAsc, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLastNameDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnFirstNameAsc, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFirstNameDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFirstNameDesc)
+                    .addComponent(btnFirstNameAsc))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLastNameDesc)
+                    .addComponent(btnLastNameAsc))
+                .addGap(17, 17, 17))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFirstNameAscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstNameAscActionPerformed
+        Collections.sort(students, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.getFirstName().compareTo(o2.getFirstName());
+            }
+        });
+    }//GEN-LAST:event_btnFirstNameAscActionPerformed
+
+    private void btnFirstNameDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstNameDescActionPerformed
+        Collections.sort(students, (o1, o2) -> -o1.getFirstName().compareTo(o2.getFirstName()));
+        loadStudentsModel();
+    }//GEN-LAST:event_btnFirstNameDescActionPerformed
+
+    private void btnLastNameAscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastNameAscActionPerformed
+        Collections.sort(students, (o1, o2) -> o1.getLastName().compareTo(o2.getLastName()));
+        loadStudentsModel();
+    }//GEN-LAST:event_btnLastNameAscActionPerformed
+
+    private void btnLastNameDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastNameDescActionPerformed
+        Collections.sort(students, (o1, o2) -> -o1.getLastName().compareTo(o2.getLastName()));
+        loadStudentsModel();
+    }//GEN-LAST:event_btnLastNameDescActionPerformed
+
+    private void tfKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfKeyReleased
+        loadStudentsModel();
+    }//GEN-LAST:event_tfKeyReleased
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        generateStudents();
+        Collections.sort(students);
+        loadStudentsModel();
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void ftKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ftKeyReleased
+        loadStudentsModel();
+    }//GEN-LAST:event_ftKeyReleased
 
     /**
      * @param args the command line arguments
@@ -78,5 +233,51 @@ public class MyTask02 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFirstNameAsc;
+    private javax.swing.JButton btnFirstNameDesc;
+    private javax.swing.JButton btnLastNameAsc;
+    private javax.swing.JButton btnLastNameDesc;
+    private javax.swing.JTextField ftLastName;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbFirstName;
+    private javax.swing.JList<Student> lsStudents;
+    private javax.swing.JTextField tfFirstName;
+    private javax.swing.JLabel tfLastName;
     // End of variables declaration//GEN-END:variables
+
+    private void generateStudents() {
+        students = Arrays.asList(
+                new Student("Milica", "Kamilica", 321),
+                new Student("Milutin", "Kamilica", 213),
+                new Student("Gojko", "Mrnjavcevic", 231),
+                new Student("Robert", "MeDiro", 123),
+                new Student("Gargamel", "Gibson", 312)
+        );
+    }
+
+    private void loadStudentsModel() {
+        studentsModel.clear();
+        students.stream().filter(student -> {
+            boolean test = true;
+            if (!tfFirstName.getText().trim().isEmpty()) {
+                test &= student
+                        .getFirstName()
+                        .toLowerCase()
+                        .startsWith(tfFirstName.getText()
+                                .toLowerCase()
+                                .trim());
+            }
+            if (!tfLastName.getText().trim().isEmpty()) {
+                test &= student.getLastName()
+                        .toLowerCase()
+                        .startsWith(tfLastName.getText()
+                                .toLowerCase()
+                                .trim());
+            }
+
+            return test;
+        }).forEach(studentsModel::addElement);
+
+        lsStudents.setModel(studentsModel);
+    }
 }
