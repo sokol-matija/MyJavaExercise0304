@@ -4,11 +4,19 @@
  */
 package hr.algebra;
 
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author msokol
  */
 public class MyTask01 extends javax.swing.JFrame {
+
+    private final List<String> sentences = new ArrayList<>();
+    private final DefaultListModel<String> sentencesModel = new DefaultListModel<>();
 
     /**
      * Creates new form MyTask01
@@ -26,23 +34,129 @@ public class MyTask01 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lbSentance = new javax.swing.JLabel();
+        tfSentance = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tfFilter = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        chbPrefix = new javax.swing.JCheckBox();
+        chbSuffix = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lsSentances = new javax.swing.JList<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("String Filter");
+
+        lbSentance.setText("Sentence:");
+
+        tfSentance.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfSentanceKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Filter:");
+
+        tfFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFilterKeyReleased(evt);
+            }
+        });
+
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        chbPrefix.setText("prefix");
+        chbPrefix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbActionPerformed(evt);
+            }
+        });
+
+        chbSuffix.setText("suffix");
+        chbSuffix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(lsSentances);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbSentance, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfSentance, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdd))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfFilter)
+                            .addComponent(jScrollPane1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(chbPrefix))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chbSuffix)))))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbSentance, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfSentance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(chbPrefix)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chbSuffix))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tfSentanceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSentanceKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            loadSentences();
+        }
+    }//GEN-LAST:event_tfSentanceKeyReleased
+
+    private void tfFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFilterKeyReleased
+        loadModel();
+    }//GEN-LAST:event_tfFilterKeyReleased
+
+    private void chbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbActionPerformed
+        loadModel();
+    }//GEN-LAST:event_chbActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        loadSentences();
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +194,40 @@ public class MyTask01 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JCheckBox chbPrefix;
+    private javax.swing.JCheckBox chbSuffix;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbSentance;
+    private javax.swing.JList<String> lsSentances;
+    private javax.swing.JTextField tfFilter;
+    private javax.swing.JTextField tfSentance;
     // End of variables declaration//GEN-END:variables
+
+    private void loadSentences() {
+        if (tfSentance.getText().trim().isEmpty()) {
+            return;
+        }
+        sentences.add(tfSentance.getText().trim());
+        tfSentance.setText("");
+        loadModel();
+    }
+
+    private void loadModel() {
+        sentencesModel.clear();
+        sentences.stream()
+                .filter(sentence -> {
+                    sentence = sentence.toLowerCase().trim();
+                    boolean test = true;
+                    if (chbPrefix.isSelected()) {
+                        test &= sentence.startsWith(tfFilter.getText().toLowerCase());
+                    }
+                    if (chbSuffix.isSelected()) {
+                        test &= sentence.endsWith(tfFilter.getText().toLowerCase());
+                    }
+                    return test;
+                }).forEach(sentencesModel::addElement);
+        lsSentances.setModel(sentencesModel);
+    }
 }
