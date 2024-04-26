@@ -10,6 +10,7 @@
         <module>Utilities</module>
         <module>MyTask01</module>
         <module>MyTask02</module>
+        <module>MyTask04</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

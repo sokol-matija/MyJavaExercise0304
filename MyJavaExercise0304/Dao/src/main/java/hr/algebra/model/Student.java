@@ -27,7 +27,7 @@ public class Student implements Comparable<Student> {
 
     @Override
     public String toString() {
-        return "Student{" + "firstName=" + firstName + ", lastName=" + lastName + ", indexNumber=" + indexNumber + '}';
+        return firstName + ", " + lastName + ", " + indexNumber;
     }
 
 }
