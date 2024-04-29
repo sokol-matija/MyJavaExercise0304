@@ -6,8 +6,20 @@ package hr.algebra;
 
 import hr.algebra.model.Item;
 import hr.algebra.utilities.FileUtils;
+import hr.algebra.utilities.IconUtils;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -15,11 +27,19 @@ import javax.swing.JOptionPane;
  */
 public class MyTask04 extends javax.swing.JFrame {
 
+    private final List<Item> items = new ArrayList<>();
+    private final DefaultListModel<Item> itemsModel = new DefaultListModel<>();
+
+    private List<JTextComponent> validationFields;
+    private List<JLabel> errorLabels;
+
     /**
      * Creates new form MyTask04
      */
     public MyTask04() {
         initComponents();
+        initValidation();
+        hideErrors();
     }
 
     /**
@@ -37,7 +57,7 @@ public class MyTask04 extends javax.swing.JFrame {
         lsItems = new javax.swing.JList<>();
         lbFilePath = new javax.swing.JLabel();
         tfFilePath = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lbIcon = new javax.swing.JLabel();
         lbErrorImage = new javax.swing.JLabel();
         lbTitle = new javax.swing.JLabel();
         tfTitle = new javax.swing.JTextField();
@@ -52,7 +72,7 @@ public class MyTask04 extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         lbPrice = new javax.swing.JLabel();
-        lblPrice = new javax.swing.JTextField();
+        tfPrice = new javax.swing.JTextField();
         lbPiecesError = new javax.swing.JLabel();
         lbPriceError = new javax.swing.JLabel();
         btnChoosePath = new javax.swing.JButton();
@@ -68,7 +88,7 @@ public class MyTask04 extends javax.swing.JFrame {
 
         tfFilePath.setEditable(false);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/no_image.jpeg"))); // NOI18N
+        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/no_image.jpeg"))); // NOI18N
 
         lbErrorImage.setForeground(new java.awt.Color(255, 51, 51));
         lbErrorImage.setText("X");
@@ -125,7 +145,7 @@ public class MyTask04 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbPieces, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -138,7 +158,7 @@ public class MyTask04 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnChoosePath)
                         .addGap(43, 43, 43)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,7 +197,7 @@ public class MyTask04 extends javax.swing.JFrame {
                             .addComponent(tfFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbErrorImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnChoosePath))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +228,7 @@ public class MyTask04 extends javax.swing.JFrame {
                                 .addComponent(spPieces, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbPriceError, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbPrice))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -330,7 +350,6 @@ public class MyTask04 extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -339,17 +358,77 @@ public class MyTask04 extends javax.swing.JFrame {
     private javax.swing.JLabel lbDescription;
     private javax.swing.JLabel lbErrorImage;
     private javax.swing.JLabel lbFilePath;
+    private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbPieces;
     private javax.swing.JLabel lbPiecesError;
     private javax.swing.JLabel lbPrice;
     private javax.swing.JLabel lbPriceError;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbTitleError;
-    private javax.swing.JTextField lblPrice;
     private javax.swing.JList<Item> lsItems;
     private javax.swing.JSpinner spPieces;
     private javax.swing.JTextArea taDescription;
     private javax.swing.JTextField tfFilePath;
+    private javax.swing.JTextField tfPrice;
     private javax.swing.JTextField tfTitle;
     // End of variables declaration//GEN-END:variables
+
+    private void initValidation() {
+        validationFields = Arrays.asList(tfFilePath, tfTitle, taDescription, tfPrice);
+        errorLabels = Arrays.asList(lbErrorImage, lbDescError, lbPiecesError, lbPriceError, lbTitleError);
+
+    }
+
+    private void hideErrors() {
+        errorLabels.forEach(e -> e.setVisible(false));
+    }
+
+    private void setIcon(JLabel label, File file) {
+        try {
+            ImageIcon icon = IconUtils.createIcon(file, label.getWidth(), label.getHeight());
+            label.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(MyTask04.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private boolean formValid() {
+        hideErrors();
+        boolean ok = true;
+        for (int i = 0; i < validationFields.size(); i++) {
+            ok &= !validationFields.get(i).getText().trim().isEmpty();
+            errorLabels.get(i).setVisible(validationFields.get(i).getText().trim().isEmpty());
+            if ("Double".equals(validationFields.get(i).getName())) {
+                try {
+                    Double.valueOf(validationFields.get(i).getText().trim());
+                } catch (NumberFormatException e) {
+                    errorLabels.get(i).setVisible(true);
+                    ok = false;
+                }
+            }
+        }
+        return ok;
+    }
+
+    private void loadItemsModel() {
+        itemsModel.clear();
+        items.forEach(itemsModel::addElement);
+        lsItems.setModel(itemsModel);
+    }
+
+    private void clearForm() {
+        hideErrors();
+        validationFields.forEach(e -> e.setText(""));
+        lbIcon.setIcon(new ImageIcon(getClass().getResource("/assets/no_image.jpeg")));
+        spPieces.setValue(((SpinnerNumberModel) (spPieces.getModel())).getMinimum());
+    }
+
+    private void fillForm(Item item) {
+        tfFilePath.setText(item.getImagePath());
+        setIcon(lbIcon, new File(item.getImagePath()));
+        tfTitle.setText(item.getTitle());
+        taDescription.setText(item.getDescription());
+        tfPrice.setText(String.valueOf(item.getPrice()));
+    }
+
 }
